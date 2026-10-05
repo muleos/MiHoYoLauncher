@@ -1,6 +1,7 @@
 import { webview } from '@kit.ArkWeb'
 import { BuilderNode, curves, NodeController } from '@kit.ArkUI'
 import { windowsUtil } from '../utils/WindowsUtil'
+import { cookieStore } from '../utils/CookieStore'
 
 interface WebsiteData{
   icon: Resource
@@ -83,6 +84,8 @@ struct Index {
 
   onBackPress(): boolean | void {
     if(this.url){
+      // Cookie 保活：退出网页前把当前登录态备份到沙箱（含 session cookie）
+      cookieStore.saveAll()
       this.getUIContext().animateTo({ curve: curves.springMotion(0.6, 0.8) }, () => {
         this.url = undefined
       })

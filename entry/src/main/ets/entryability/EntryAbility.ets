@@ -1,7 +1,9 @@
 import { AbilityConstant, ConfigurationConstant, UIAbility, Want } from '@kit.AbilityKit';
 import { hilog } from '@kit.PerformanceAnalysisKit';
 import { window } from '@kit.ArkUI';
+import { webview } from '@kit.ArkWeb';
 import { windowsUtil } from '../utils/WindowsUtil';
+import { cookieStore } from '../utils/CookieStore';
 
 const DOMAIN = 0x0000;
 
@@ -13,6 +15,14 @@ export default class EntryAbility extends UIAbility {
       hilog.error(DOMAIN, 'testTag', 'Failed to set colorMode. Cause: %{public}s', JSON.stringify(err));
     }
     hilog.info(DOMAIN, 'testTag', '%{public}s', 'Ability onCreate');
+    // 提前初始化 Web 引擎：Cookie 备份/还原依赖引擎，且可加快首次 WebView 打开速度
+    try {
+      webview.WebviewController.initializeWebEngine()
+    } catch (err) {
+      hilog.error(DOMAIN, 'testTag', 'initializeWebEngine failed: %{public}s', JSON.stringify(err));
+    }
+    // Cookie 保活：初始化备份存储（应用沙箱 preferences）
+    cookieStore.init(this.context.getApplicationContext());
   }
 
   onDestroy(): void {
@@ -33,6 +43,8 @@ export default class EntryAbility extends UIAbility {
         return;
       }
       hilog.info(DOMAIN, 'testTag', 'Succeeded in loading the content.');
+      // Cookie 保活：在任何 Web 创建之前，把上次备份的登录 Cookie 写回引擎（含 session cookie）
+      cookieStore.restoreAll();
       windowsUtil.init(windowStage)
       // 首帧已直出，恢复应用底色
       windowsUtil.restoreWindowBackground(windowStage);
@@ -52,5 +64,7 @@ export default class EntryAbility extends UIAbility {
   onBackground(): void {
     // Ability has back to background
     hilog.info(DOMAIN, 'testTag', '%{public}s', 'Ability onBackground');
+    // Cookie 保活：切后台时备份内存中的完整 Cookie（含 session cookie），防止进程回收后丢失
+    cookieStore.saveAll();
   }
 }
