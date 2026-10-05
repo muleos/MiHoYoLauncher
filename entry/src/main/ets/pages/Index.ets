@@ -2,6 +2,7 @@ import { webview } from '@kit.ArkWeb'
 import { BuilderNode, curves, NodeController } from '@kit.ArkUI'
 import { windowsUtil } from '../utils/WindowsUtil'
 import { cookieStore } from '../utils/CookieStore'
+import { backgroundKeep } from '../utils/BackgroundKeep'
 
 interface WebsiteData{
   icon: Resource
@@ -86,6 +87,8 @@ struct Index {
     if(this.url){
       // Cookie 保活：退出网页前把当前登录态备份到沙箱（含 session cookie）
       cookieStore.saveAll()
+      // 长时任务保活：离开游戏网页，停止"计算任务"长时任务并移除通知
+      backgroundKeep.stop()
       this.getUIContext().animateTo({ curve: curves.springMotion(0.6, 0.8) }, () => {
         this.url = undefined
       })
@@ -126,6 +129,8 @@ struct Index {
             .transition(TransitionEffect.OPACITY)
             .onClick(() => {
               windowsUtil.setKeepScreenOn(true)
+              // 长时任务保活：进入游戏后申请"计算任务"长时任务，切后台进程不被冻结
+              backgroundKeep.start()
               this.getUIContext().animateTo({ curve: curves.springMotion(0.4, 1) }, () => this.url = website.url)
             })
           })

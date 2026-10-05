@@ -19,6 +19,9 @@
       },
       {
         "name": "ohos.permission.LOCK_WINDOW_CURSOR"
+      },
+      {
+        "name": "ohos.permission.KEEP_BACKGROUND_RUNNING"
       }
     ],
     "abilities": [

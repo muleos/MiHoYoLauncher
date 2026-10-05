@@ -7,12 +7,13 @@
 | 项目 | 原版 | 当前版本 |
 | --- | --- | --- |
 | 包名 bundleName | `com.salmon.mihoyo.launcher` | `com.nrc.huawei` |
-| 版本号 versionName | `2.0.0` | `3.1.0` |
-| versionCode | `2000000` | `3001000` |
+| 版本号 versionName | `2.0.0` | `3.2.0` |
+| versionCode | `2000000` | `3002000` |
 | 签名 | 原作者本机调试证书 | 已移除，产物为未签名 HAP |
 | 开屏遮罩 | 系统启动页（图标 + 深色背景） | 启动页背景全透明 + 首帧直出，无可见遮罩 |
 | 首帧一致性 | 背景图 4K 异步解码，图标先于背景出现 | 背景图降采样至 2560×1440 并同步解码，背景与图标同帧出现 |
 | 登录态保活 | WebView session cookie 随进程退出丢失，频繁掉登录 | 3.1.0 新增：退出网页/切后台时备份完整 Cookie（含 session cookie）到沙箱，启动时写回引擎 |
+| 后台保活 | 依赖系统播控中心媒体会话 | 3.2.0 新增：进入游戏申请"计算任务"（TASK_KEEPING）长时任务，通知栏显示"正在进行计算任务"，切后台进程不被冻结 |
 
 ## 目录结构
 
@@ -52,7 +53,7 @@ export DEVECO_SDK_HOME="<DevEco Studio 安装目录>/sdk"
 
 ## 安装说明
 
-仓库内 `release/MiHoYoLauncher-com.nrc.huawei-3.1.0-unsigned.hap` 为**未签名**安装包，需自行签名后才能安装到设备：
+仓库内 `release/MiHoYoLauncher-com.nrc.huawei-3.2.0-unsigned.hap` 为**未签名**安装包，需自行签名后才能安装到设备：
 
 1. 在 DevEco Studio 中打开工程，`File → Project Structure → Signing Configs` 勾选自动签名；
 2. 或使用 `hap-sign-tool` 配合自有证书对 HAP 重新签名。

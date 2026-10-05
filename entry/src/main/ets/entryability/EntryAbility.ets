@@ -4,6 +4,7 @@ import { window } from '@kit.ArkUI';
 import { webview } from '@kit.ArkWeb';
 import { windowsUtil } from '../utils/WindowsUtil';
 import { cookieStore } from '../utils/CookieStore';
+import { backgroundKeep } from '../utils/BackgroundKeep';
 
 const DOMAIN = 0x0000;
 
@@ -23,6 +24,8 @@ export default class EntryAbility extends UIAbility {
     }
     // Cookie 保活：初始化备份存储（应用沙箱 preferences）
     cookieStore.init(this.context.getApplicationContext());
+    // 长时任务保活：初始化上下文（进入游戏网页时申请"计算任务"长时任务）
+    backgroundKeep.init(this.context.getApplicationContext());
   }
 
   onDestroy(): void {
