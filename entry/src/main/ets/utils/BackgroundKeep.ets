@@ -32,7 +32,7 @@ class BackgroundKeep {
       // 通知点击后回到应用
       const wantAgentObj: WantAgent = await wantAgent.getWantAgent({
         wants: [{
-          bundleName: 'com.nrc.huawei',
+          bundleName: 'com.hottagames.hotta.hm.huawei',
           abilityName: 'EntryAbility'
         }],
         operationType: wantAgent.OperationType.START_ABILITY,
