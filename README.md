@@ -6,7 +6,7 @@
 
 | 项目 | 原版 | 当前版本 |
 | --- | --- | --- |
-| 包名 bundleName | `com.salmon.mihoyo.launcher` | `com.nrc.huawei` |
+| 包名 bundleName | `com.salmon.mihoyo.launcher` | `com.hottagames.hotta.hm.huawei` |
 | 版本号 versionName | `2.0.0` | `3.2.0` |
 | versionCode | `2000000` | `3002000` |
 | 签名 | 原作者本机调试证书 | 已移除，产物为未签名 HAP |
@@ -18,7 +18,7 @@
 ## 目录结构
 
 ```
-.
+。
 ├── AppScope/                  # 应用级配置（包名、版本号、图标）
 ├── entry/                     # 主模块
 │   ├── src/main/ets/
