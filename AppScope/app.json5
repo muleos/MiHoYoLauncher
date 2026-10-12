@@ -2,8 +2,8 @@
   "app": {
     "bundleName": "com.hottagames.hotta.hm.huawei",
     "vendor": "nrc",
-    "versionCode": 3002000,
-    "versionName": "3.2.0",
+    "versionCode": 3003000,
+    "versionName": "3.3.0",
     "buildVersion": "1",
     "icon": "$media:layered_image",
     "label": "$string:app_name"
